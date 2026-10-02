@@ -174,12 +174,14 @@
   // ---------------------------------------------------------------------
   // tone-authentication protocol (same scheme as the standalone demo,
   // now carried on real call audio instead of speaker-to-mic). Pitched
-  // high -- just under where most adult hearing drops off -- so it's a
-  // faint, easy-to-miss presence rather than a loud beep. Not silent for
-  // everyone: younger ears and some phone speakers will still catch a
-  // thin high tone.
+  // high -- toward the top of what typical phone speakers and mics still
+  // reproduce cleanly -- so it reads as a faint, easy-to-miss presence
+  // rather than a loud beep. Pushing it higher (into the 16-18kHz band)
+  // is quieter in principle, but on real phone hardware the speaker and
+  // mic frequency response rolls off hard up there, and the tones stop
+  // decoding reliably. This band is the practical compromise.
   // ---------------------------------------------------------------------
-  const FREQ_SYNC = 18000, FREQ_ZERO = 16500, FREQ_ONE = 17250;
+  const FREQ_SYNC = 8200, FREQ_ZERO = 6800, FREQ_ONE = 7500;
   const BIT_S = 0.12, PREAMBLE_S = 0.4, DATA_BITS = 16, TOTAL_BITS = DATA_BITS + 1;
   const RECHECK_MS = 20000;
 
@@ -250,7 +252,7 @@
 
   function showAuthResult(ok, received, expected, parityOk) {
     badge.className = "badge " + (ok ? "ok" : "fail");
-    badge.textContent = ok ? "\u2713" : "\u2717";
+    badge.textContent = ok ? "✓" : "✗";
     if (!parityOk) {
       badgeLabel.textContent = "Transmission error reading the tones, rechecking shortly.";
     } else if (ok) {
