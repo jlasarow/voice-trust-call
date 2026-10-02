@@ -299,7 +299,12 @@
 
     try {
       localStream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+        // Off, not on: these flags tell the phone's voice processor to
+        // leave the signal alone. On iOS in particular, turning them on
+        // engages a much more aggressive built-in processor that can
+        // smooth out or suppress steady tones like our auth signal,
+        // which looks like what it was asking for in the first place.
+        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
       });
     } catch (err) {
       callStatus.textContent = "Microphone access denied - " + err.message;
