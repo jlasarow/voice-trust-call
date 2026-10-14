@@ -1,4 +1,4 @@
-// Voice Trust Call -- minimal signaling server.
+// Untapped AI -- minimal signaling server.
 //
 // This server never sees or touches call audio. Its only job is to let two
 // phones that both know the same short call code find each other and swap
@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/healthz", (req, res) => res.status(200).send("ok"));
 
 const server = app.listen(PORT, () => {
-  console.log("Voice Trust Call listening on " + PORT);
+  console.log("Untapped AI listening on " + PORT);
 });
 
 const wss = new WebSocketServer({ server, path: "/ws" });
